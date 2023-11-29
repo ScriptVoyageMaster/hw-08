@@ -18,7 +18,11 @@ form.addEventListener('input', throttle(updateLocalStorage, 500));
 // Відстежувати подію submit і очищати локальне сховище та поля форми
 form.addEventListener('submit', function (event) {
   event.preventDefault();
-  clearLocalStorageAndForm();
+  if (validateForm()) {
+    clearLocalStorageAndForm();
+     } else {
+    alert('Будь ласка, заповніть обидва поля форми.');
+  }
 });
 
 // Оновлення локального сховища
@@ -48,4 +52,7 @@ function clearLocalStorageAndForm() {
   emailInput.value = '';
   messageTextarea.value = '';
 }
-
+// Перевірка форми на заповненість обидва поля
+function validateForm() {
+  return emailInput.value.trim() !== '' && messageTextarea.value.trim() !== '';
+}
